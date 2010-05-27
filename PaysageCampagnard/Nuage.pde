@@ -9,8 +9,8 @@ public class Nuage extends Objet {
   private int nbCercles;
   private int diametreCercles;  
   private float taille;
-  private ArrayList rotationsAleatoires;
-  private ArrayList translationsAleatoires;
+  private float rotationsAleatoires[];
+  private float translationsAleatoires[];
   
   
   ////////////////////////////////////////////////////////////////
@@ -19,7 +19,9 @@ public class Nuage extends Objet {
       
   // couleur : couleur du nuage
   // A choisir aux alentours de
-  // color(255, 255, 255) pour un nuage blanc
+  // color(255) pour un nuage blanc
+  // color(180) pour un nuage gris
+  // color(90) pour un nuage très sombre
   // color(255, 223, 116) pour un nuage jaune orangé
   // color(255, 97, 18) pour un nuage rouge
   
@@ -30,7 +32,7 @@ public class Nuage extends Objet {
   // 1 : peu de cercles, 5 : beaucoup de cercles
   
   // transparence :
-  // 1 pour un nuage opaque, 5 pour un nuage assez transparent
+  // 1 pour un nuage assez transparent, 5 pour un nuage opaque
   
   Nuage(int x, int y, color couleur, int taille, int complexite, int transparence) {
     this.x = x;
@@ -40,6 +42,12 @@ public class Nuage extends Objet {
     diametreCercles = rand(5, 15, 6 - complexite);
     this.transparence = rand(10, 50, transparence);
     this.taille = rand(0.02, 5.0, taille);
+    rotationsAleatoires = new float[nbCercles];
+    translationsAleatoires = new float[nbCercles];
+    for (int i = 0; i < nbCercles; i++) {
+      rotationsAleatoires[i] = random(2*PI/nbCercles, 2*PI);
+      translationsAleatoires[i] = random(0.3*diametreCercles, 0.6*diametreCercles);
+    }
   }
   
   
@@ -54,8 +62,8 @@ public class Nuage extends Objet {
     noStroke();
     fill(color(red(couleur), green(couleur), blue(couleur), transparence));
     for (int i = 0; i < nbCercles; i++) {
-      rotate(random(2*PI/nbCercles, 2*PI));
-      translate(random(diametreCercles/3, 2*diametreCercles/3), 0);
+      rotate(rotationsAleatoires[i]);
+      translate(translationsAleatoires[i], 0);
       ellipse(0, 0, diametreCercles, diametreCercles);
     }
     popMatrix(); 

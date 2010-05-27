@@ -9,7 +9,7 @@ void draw() {
 void setup() {
   size(1024, 768);
   fond = new Fond(0, 0, color(113, 185, 255), 0);
-  nuage = new Nuage(200, 200, color(255), 5, 1, 3);
+  nuage = new Nuage(200, 200, color(90), 3, 5, 3);
 }
 
 
